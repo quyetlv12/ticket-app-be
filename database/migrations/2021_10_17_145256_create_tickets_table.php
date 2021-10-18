@@ -15,6 +15,11 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('booker_id');
+            $table->unsignedBigInteger('buses_id');
+            $table->unsignedBigInteger('user_id');
+            $table->date('booking_date');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

@@ -15,6 +15,9 @@ class CreateServiceCarsTable extends Migration
     {
         Schema::create('service_cars', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('buses_id');
+            $table->unsignedBigInteger('service_id');
+            $table->integer('service_price')->default(0);
             $table->timestamps();
         });
     }

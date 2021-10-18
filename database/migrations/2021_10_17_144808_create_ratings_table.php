@@ -15,6 +15,11 @@ class CreateRatingsTable extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('buses_id');
+            $table->date('rating_time');
+            $table->string('rating_point');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

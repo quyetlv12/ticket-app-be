@@ -15,7 +15,18 @@ class CreateBusesTable extends Migration
     {
         Schema::create('buses', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('cartype_id');
+            $table->unsignedBigInteger('route_id');
+            $table->string('image')->nullable();
+            $table->integer('seat')->default(0);
+            $table->integer('price')->default(0);
+            $table->date('date_active');
+            $table->string('start_time');
+            $table->integer('status')->default(1);
+            $table->text('description')->nullable();
             $table->timestamps();
+
         });
     }
 

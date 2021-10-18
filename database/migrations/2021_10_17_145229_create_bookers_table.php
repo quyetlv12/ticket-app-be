@@ -15,6 +15,11 @@ class CreateBookersTable extends Migration
     {
         Schema::create('bookers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->integer('gender')->default(1);
+            $table->string('phone')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }
