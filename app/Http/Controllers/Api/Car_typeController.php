@@ -15,8 +15,8 @@ class Car_typeController extends Controller
      */
     public function index()
     {
-        $product = Car_type::all();
-        return response()->json($product);
+        $car_type = Car_type::all();
+        return response()->json($car_type);
     }
 
     /**
