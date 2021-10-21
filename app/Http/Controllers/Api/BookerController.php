@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Car_type;
 
-class Car_typeController extends Controller
+class BookerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class Car_typeController extends Controller
      */
     public function index()
     {
-        $product = Car_type::all();
-        return response()->json($product);
+        //
     }
 
     /**
@@ -37,7 +35,7 @@ class Car_typeController extends Controller
      */
     public function store(Request $request)
     {
-        return Car_type::create($request->all());
+        //
     }
 
     /**
@@ -48,8 +46,7 @@ class Car_typeController extends Controller
      */
     public function show($id)
     {
-        $car_type = Car_type::find($id);
-        return $car_type;
+        //
     }
 
     /**
@@ -60,8 +57,7 @@ class Car_typeController extends Controller
      */
     public function edit($id)
     {
-        $car_type = Car_type::find($id);
-        return $car_type;
+        //
     }
 
     /**
@@ -73,9 +69,7 @@ class Car_typeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $car_type = Car_type::findOrFail($id);
-        $car_type->update($request->all());
-        return $car_type;
+        //
     }
 
     /**
@@ -86,8 +80,6 @@ class Car_typeController extends Controller
      */
     public function destroy($id)
     {
-        $car_type = Car_type::findOrFail($id);
-        $car_type->delete();
-
+        //
     }
 }
