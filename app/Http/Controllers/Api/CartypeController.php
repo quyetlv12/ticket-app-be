@@ -50,7 +50,6 @@ class CartypeController extends Controller
     {
         $cartype = Cartype::find($id);
         return $cartype;
-
     }
 
     /**
