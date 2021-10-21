@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BusesController;
-use App\Http\Controllers\Api\Car_typeController;
+use App\Http\Controllers\Api\CartypeController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\RouteController;
 
@@ -24,6 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::resource('buses', BusesController::class);
-Route::resource('cartypes', Car_typeController::class);
+Route::resource('cartypes', CartypeController::class);
 Route::resource('routes', RouteController::class);
 Route::resource('locations', LocationController::class);
