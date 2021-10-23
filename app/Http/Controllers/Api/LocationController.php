@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Location;
+use Illuminate\Support\Facades\Validator;
 
 class LocationController extends Controller
 {
@@ -16,7 +17,10 @@ class LocationController extends Controller
     public function index()
     {
         $product = Location::all();
-        return response()->json($product);
+        return response()->json([
+            'Success' => true,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -37,7 +41,23 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        return Location::create($request->all());
+        $validator = Validator::make($request->all(), [
+            'pickup_point' => 'required:locations|max:255',
+            'stop_point' => 'required:locations|max:255',
+            'pickup_time' => 'required:locations|max:255',
+            'stop_time' => 'required:locations|max:255',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
+        } else{
+                return $createlocations = Location::create($request->all());
+
+        }
     }
 
     /**
@@ -46,8 +66,9 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Location $location)
+    public function show($id)
     {
+        $location = Location::find($id);
         return $location;
     }
 
@@ -59,7 +80,8 @@ class LocationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $location = Location::find($id);
+        return $location;
     }
 
     /**
@@ -69,10 +91,27 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Location $location)
+    public function update(Request $request, $id)
     {
-        $location->update($request->all());
-        return $location;
+        $validator = Validator::make($request->all(), [
+            'pickup_point' => 'required:locations|max:255',
+            'stop_point' => 'required:locations|max:255',
+            'pickup_time' => 'required:locations|max:255',
+            'stop_time' => 'required:locations|max:255',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
+        } else{
+            $location = Location::findOrFail($id);
+            $location->update($request->all());
+            return $location;
+
+        }
     }
 
     /**
@@ -81,8 +120,9 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Location $location)
+    public function destroy($id)
     {
+        $location = Location::findOrFail($id);
         $location->delete();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Buses;
+use Illuminate\Support\Facades\Validator;
 
 class BusesController extends Controller
 {
@@ -16,7 +17,10 @@ class BusesController extends Controller
     public function index()
     {
         $product = Buses::all();
-        return response()->json($product);
+        return response()->json([
+            'Success' => true,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -37,7 +41,28 @@ class BusesController extends Controller
      */
     public function store(Request $request)
     {
-        return Buses::create($request->all());
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:buses|max:255',
+            'cartype_id' => 'required:buses|max:255',
+            'route_id' => 'required:buses|max:255',
+            'image' => 'required:buses|max:255',
+            'seat' => 'required|integer:buses|max:255',
+            'price' => 'required|integer|not_in:0:buses',
+            'date_active' => 'required:buses|max:255',
+            'start_time' => 'required:buses|max:255',
+            'status' => 'required:buses|max:1',
+            'description' => 'required:buses|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
+        } else{
+            return $createbuses = Buses::create($request->all());
+
+        }
     }
 
     /**
@@ -74,9 +99,31 @@ class BusesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $buses = Buses::findOrFail($id);
-        $buses->update($request->all());
-        return $buses;
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:buses|max:255',
+            'cartype_id' => 'required:buses|max:255',
+            'route_id' => 'required:buses|max:255',
+            'image' => 'required:buses|max:255',
+            'seat' => 'required|integer:buses|max:255',
+            'price' => 'required|integer|not_in:0:buses',
+            'date_active' => 'required:buses|max:255',
+            'start_time' => 'required:buses|max:255',
+            'status' => 'required:buses|max:1',
+            'description' => 'required:buses|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
+        } else{
+            $buses = Buses::findOrFail($id);
+            $buses->update($request->all());
+            return $buses;
+
+        }
     }
 
     /**

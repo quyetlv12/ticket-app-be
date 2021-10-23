@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\route;
+use Illuminate\Support\Facades\Validator;
 
 class RouteController extends Controller
 {
@@ -16,7 +17,10 @@ class RouteController extends Controller
     public function index()
     {
         $product = route::all();
-        return response()->json($product);
+        return response()->json([
+            'Success' => true,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -37,7 +41,23 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-        return route::create($request->all());
+        $validator = Validator::make($request->all(), [
+            'location_id' => 'required:routes',
+            'start_point' => 'required:routes|max:255',
+            'end_point' => 'required:routes|max:255',
+            'travel_time' => 'required:routes|max:255',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
+        } else{
+                return $createcroute = route::create($request->all());
+
+        }
     }
 
     /**
@@ -46,8 +66,9 @@ class RouteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(route $route)
+    public function show($id)
     {
+        $route = route::findOrFail($id);
         return $route;
     }
 
@@ -59,7 +80,8 @@ class RouteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $route = route::findOrFail($id);
+        return $route;
     }
 
     /**
@@ -69,10 +91,26 @@ class RouteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, route $route)
+    public function update(Request $request,  $id)
     {
-        $route->update($request->all());
-        return $route;
+        $validator = Validator::make($request->all(), [
+            'location_id' => 'required:routes',
+            'start_point' => 'required:routes|max:255',
+            'end_point' => 'required:routes|max:255',
+            'travel_time' => 'required:routes|max:255',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
+        } else{
+            $route = route::findOrFail($id);
+            $route->update($request->all());
+            return $route;
+        }
     }
 
     /**
@@ -81,8 +119,9 @@ class RouteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(route $route)
+    public function destroy($id)
     {
+        $route = route::findOrFail($id);
         $route->delete();
     }
 }
