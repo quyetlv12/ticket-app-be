@@ -26,7 +26,7 @@ class CreateBusesTable extends Migration
             $table->integer('endPointId');
             $table->date('date_active');
             $table->string('start_time');
-            $table->integer('status')->default(1);
+            $table->string('status')->default('ACTIVED');
             $table->text('description')->nullable();
             $table->timestamps();
 
