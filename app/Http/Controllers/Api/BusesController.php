@@ -19,7 +19,6 @@ class BusesController extends Controller
     {
         $product = Buses::all();
         return response()->json([
-            'Success' => true,
             'product' => $product
         ]);
     }
@@ -60,7 +59,6 @@ class BusesController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
                 'errors' => $validator->errors()
             ]);
         } else{
@@ -122,7 +120,6 @@ class BusesController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
                 'errors' => $validator->errors()
             ]);
         } else{

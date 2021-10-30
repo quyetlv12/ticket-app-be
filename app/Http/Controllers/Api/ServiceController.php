@@ -18,7 +18,6 @@ class ServiceController extends Controller
     {
         $product = Service::all();
         return response()->json([
-            'Success' => true,
             'product' => $product
         ]);
     }
@@ -47,7 +46,6 @@ class ServiceController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
                 'errors' => $validator->errors()
             ]);
         } else{
@@ -95,7 +93,6 @@ class ServiceController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
                 'errors' => $validator->errors()
             ]);
         } else{

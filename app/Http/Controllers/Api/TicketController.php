@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Cartype;
-use Illuminate\Support\Facades\Validator;
 
-
-class CartypeController extends Controller
+class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +14,7 @@ class CartypeController extends Controller
      */
     public function index()
     {
-        $product = Cartype::all();
-        return response()->json([
-            'product' => $product
-        ]);
+        //
     }
 
     /**
@@ -41,18 +35,7 @@ class CartypeController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:car_types|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        } else{
-                return $createcar_type = Cartype::create($request->all());
-
-        }
+        //
     }
 
     /**
@@ -63,8 +46,7 @@ class CartypeController extends Controller
      */
     public function show($id)
     {
-        $cartype = Cartype::find($id);
-        return $cartype;
+        //
     }
 
     /**
@@ -75,8 +57,7 @@ class CartypeController extends Controller
      */
     public function edit($id)
     {
-        $cartype = Cartype::find($id);
-        return $cartype;
+        //
     }
 
     /**
@@ -88,20 +69,7 @@ class CartypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:car_types|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        } else{
-            $cartype = Cartype::findOrFail($id);
-            $cartype->update($request->all());
-            return $cartype;
-
-        }
+        //
     }
 
     /**
@@ -112,7 +80,6 @@ class CartypeController extends Controller
      */
     public function destroy($id)
     {
-        $cartype = Cartype::findOrFail($id);
-        $cartype->delete();
+        //
     }
 }
