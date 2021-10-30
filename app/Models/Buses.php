@@ -9,7 +9,20 @@ class Buses extends Model
 {
     use HasFactory;
     protected $table = "buses";
-    protected $fillable = [
-        'name','cartype_id','route_id','image', 'seat','price','date_active','start_time','status','description'
+    protected $fillable =
+    [
+        'name',
+        'cartype_id',
+        'image',
+        'seat',
+        'price',
+        'startPointName',
+        'startPointId',
+        'endPointName',
+        'endPointId',
+        'date_active',
+        'start_time',
+        'status',
+        'description'
     ];
 }

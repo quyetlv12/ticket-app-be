@@ -4,8 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BusesController;
 use App\Http\Controllers\Api\CartypeController;
-use App\Http\Controllers\Api\LocationController;
-use App\Http\Controllers\Api\RouteController;
+use App\Http\Controllers\Api\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('buses', BusesController::class);
 Route::resource('cartypes', CartypeController::class);
-Route::resource('routes', RouteController::class);
-Route::resource('locations', LocationController::class);
+Route::resource('services', ServiceController::class);
+
+
+

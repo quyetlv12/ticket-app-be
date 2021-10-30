@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Buses;
+use App\Models\Service_car;
 use Illuminate\Support\Facades\Validator;
 
 class BusesController extends Controller
@@ -43,14 +44,17 @@ class BusesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:buses|max:255',
-            'cartype_id' => 'required:buses|max:255',
-            'route_id' => 'required:buses|max:255',
+            'cartype_id' => 'required|integer:buses|max:255',
             'image' => 'required:buses|max:255',
-            'seat' => 'required|integer:buses|max:255',
+            'seat' => 'required|integer|:buses|max:255',
             'price' => 'required|integer|not_in:0:buses',
+            'startPointName' => 'required:buses|max:255',
+            'startPointId' => 'required|integer:buses|max:255',
+            'endPointName' => 'required:buses|max:255',
+            'endPointId' => 'required|integer:buses|max:255',
             'date_active' => 'required:buses|max:255',
             'start_time' => 'required:buses|max:255',
-            'status' => 'required:buses|max:1',
+            'status' => 'required:buses',
             'description' => 'required:buses|max:255',
         ]);
 
@@ -102,14 +106,17 @@ class BusesController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:buses|max:255',
-            'cartype_id' => 'required:buses|max:255',
-            'route_id' => 'required:buses|max:255',
+            'cartype_id' => 'required|integer:buses|max:255',
             'image' => 'required:buses|max:255',
-            'seat' => 'required|integer:buses|max:255',
+            'seat' => 'required|integer|:buses|max:255',
             'price' => 'required|integer|not_in:0:buses',
+            'startPointName' => 'required:buses|max:255',
+            'startPointId' => 'required|integer:buses|max:255',
+            'endPointName' => 'required:buses|max:255',
+            'endPointId' => 'required|integer:buses|max:255',
             'date_active' => 'required:buses|max:255',
             'start_time' => 'required:buses|max:255',
-            'status' => 'required:buses|max:1',
+            'status' => 'required:buses',
             'description' => 'required:buses|max:255',
         ]);
 
@@ -137,4 +144,7 @@ class BusesController extends Controller
         $buses = Buses::findOrFail($id);
         $buses->delete();
     }
+
+
+
 }

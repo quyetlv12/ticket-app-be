@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Service_car extends Model
 {
     use HasFactory;
+    protected $table = "service_cars";
+    public $fillable = [
+        'buses_id', 'service_id', 'additional_price'
+    ];
+    public function buses(){
+        return $this->belongsTo(Room::class,'buses_id');
+    }
+    public function service(){
+        return $this->belongsTo(Service::class,'service_id');
+    }
 }
