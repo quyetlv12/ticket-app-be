@@ -53,7 +53,6 @@ class BusesController extends Controller
             'endPointId' => 'required|integer:buses|max:255',
             'date_active' => 'required:buses|max:255',
             'start_time' => 'required:buses|max:255',
-            'status' => 'required:buses',
             'description' => 'required:buses|max:255',
         ]);
 
@@ -114,7 +113,6 @@ class BusesController extends Controller
             'endPointId' => 'required|integer:buses|max:255',
             'date_active' => 'required:buses|max:255',
             'start_time' => 'required:buses|max:255',
-            'status' => 'required:buses',
             'description' => 'required:buses|max:255',
         ]);
 
