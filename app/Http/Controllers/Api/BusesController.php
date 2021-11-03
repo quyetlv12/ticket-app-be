@@ -22,9 +22,7 @@ class BusesController extends Controller
         // echo"<pre>";
         // print_r($list_sv);die;
         // echo"</pre>";
-        return response()->json([
-            'product' => $list_sv
-        ]);
+        return $list_sv;
     }
 
     /**
@@ -164,6 +162,17 @@ class BusesController extends Controller
         $buses->delete();
     }
 
-
+    public function search(Request $request)
+    {
+        $search_query = Buses::with(['Service']);
+        if ($request->startPointId) {
+            $search_query->where('startPointId', $request->startPointId);
+        }
+        if ($request->endPointId) {
+            $search_query->where('endPointId', $request->endPointId);
+        }
+        $bus = $search_query->get();
+        return $bus;
+    }
 
 }

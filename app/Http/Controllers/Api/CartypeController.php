@@ -17,10 +17,8 @@ class CartypeController extends Controller
      */
     public function index()
     {
-        $product = Cartype::all();
-        return response()->json([
-            'product' => $product
-        ]);
+        $cartype = Cartype::all();
+        return $cartype;
     }
 
     /**

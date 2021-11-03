@@ -16,10 +16,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $product = Service::all();
-        return response()->json([
-            'product' => $product
-        ]);
+        $service = Service::all();
+        return $service;
     }
 
     /**

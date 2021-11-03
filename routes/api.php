@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::resource('buses', BusesController::class);
+Route::get('search', [BusesController::class , 'search']);
 Route::resource('cartypes', CartypeController::class);
 Route::resource('services', ServiceController::class);
 
