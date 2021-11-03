@@ -41,18 +41,18 @@ class CartypeController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:car_types|max:255',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|unique:car_types|max:255',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        } else{
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'errors' => $validator->errors()
+        //     ]);
+        // } else{
                 return $createcar_type = Cartype::create($request->all());
 
-        }
+        // }
     }
 
     /**
@@ -88,20 +88,20 @@ class CartypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:car_types|max:255',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|unique:car_types|max:255',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        } else{
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'errors' => $validator->errors()
+        //     ]);
+        // } else{
             $cartype = Cartype::findOrFail($id);
             $cartype->update($request->all());
             return $cartype;
 
-        }
+        // }
     }
 
     /**

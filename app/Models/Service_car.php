@@ -10,10 +10,10 @@ class Service_car extends Model
     use HasFactory;
     protected $table = "service_cars";
     public $fillable = [
-        'buses_id', 'service_id', 'additional_price'
+        'buses_id', 'service_id', 'service_price'
     ];
     public function buses(){
-        return $this->belongsTo(Room::class,'buses_id');
+        return $this->belongsTo(Buses::class,'buses_id');
     }
     public function service(){
         return $this->belongsTo(Service::class,'service_id');

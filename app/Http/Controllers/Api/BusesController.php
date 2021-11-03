@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Buses;
 use App\Models\Service_car;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\BusesResource;
 
 class BusesController extends Controller
 {
@@ -17,9 +18,12 @@ class BusesController extends Controller
      */
     public function index()
     {
-        $product = Buses::all();
+        $list_sv = Buses::with('Service')->get();
+        // echo"<pre>";
+        // print_r($list_sv);die;
+        // echo"</pre>";
         return response()->json([
-            'product' => $product
+            'product' => $list_sv
         ]);
     }
 
@@ -41,29 +45,40 @@ class BusesController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:buses|max:255',
-            'cartype_id' => 'required|integer:buses|max:255',
-            'image' => 'required:buses|max:255',
-            'seat' => 'required|integer|:buses|max:255',
-            'price' => 'required|integer|not_in:0:buses',
-            'startPointName' => 'required:buses|max:255',
-            'startPointId' => 'required|integer:buses|max:255',
-            'endPointName' => 'required:buses|max:255',
-            'endPointId' => 'required|integer:buses|max:255',
-            'date_active' => 'required:buses|max:255',
-            'start_time' => 'required:buses|max:255',
-            'description' => 'required:buses|max:255',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|unique:buses|max:255',
+        //     'image' => 'required:buses|max:255',
+        //     'seat' => 'required|integer|:buses|max:255',
+        //     'price' => 'required|integer|not_in:0:buses',
+        //     'startPointName' => 'required:buses|max:255',
+        //     'startPointId' => 'required|integer:buses|max:255',
+        //     'endPointName' => 'required:buses|max:255',
+        //     'endPointId' => 'required|integer:buses|max:255',
+        //     'date_active' => 'required:buses|max:255',
+        //     'start_time' => 'required:buses|max:255',
+        //     'description' => 'required:buses|max:255',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        } else{
-            return $createbuses = Buses::create($request->all());
-
-        }
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'errors' => $validator->errors()
+        //     ]);
+        // } else{
+            $model = new Buses();
+            $model->fill($request->all());
+            $model->save();
+            if ($request->service_id){
+                $request->service_id=array_unique($request->service_id);
+                foreach ($request->service_id as $sv =>$v) {
+                $data = [
+                    'buses_id' => $model->id,
+                    'service_id'=>$request->service_id[$sv],
+                    'service_price'=>$request->service_price[$sv]
+                    ];
+                    Service_car::create($data);
+                }
+            }
+        // }
     }
 
     /**
@@ -74,9 +89,7 @@ class BusesController extends Controller
      */
     public function show($id)
     {
-        $buses = Buses::find($id);
-        return $buses;
-
+        return $buses = Buses::with('Service')->where('id', '=', $id)->first();
     }
 
     /**
@@ -101,31 +114,41 @@ class BusesController extends Controller
     public function update(Request $request, $id)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:buses|max:255',
-            'cartype_id' => 'required|integer:buses|max:255',
-            'image' => 'required:buses|max:255',
-            'seat' => 'required|integer|:buses|max:255',
-            'price' => 'required|integer|not_in:0:buses',
-            'startPointName' => 'required:buses|max:255',
-            'startPointId' => 'required|integer:buses|max:255',
-            'endPointName' => 'required:buses|max:255',
-            'endPointId' => 'required|integer:buses|max:255',
-            'date_active' => 'required:buses|max:255',
-            'start_time' => 'required:buses|max:255',
-            'description' => 'required:buses|max:255',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required:buses|max:255',
+        //     'image' => 'required:buses|max:255',
+        //     'seat' => 'required|integer|:buses|max:255',
+        //     'price' => 'required|integer|not_in:0:buses',
+        //     'startPointName' => 'required:buses|max:255',
+        //     'startPointId' => 'required|integer:buses|max:255',
+        //     'endPointName' => 'required:buses|max:255',
+        //     'endPointId' => 'required|integer:buses|max:255',
+        //     'date_active' => 'required:buses|max:255',
+        //     'start_time' => 'required:buses|max:255',
+        //     'description' => 'required:buses|max:255',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        } else{
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'errors' => $validator->errors()
+        //     ]);
+        // } else{
             $buses = Buses::findOrFail($id);
             $buses->update($request->all());
-            return $buses;
+            if ($request->service_id){
+                $request->service_id=array_unique($request->service_id);
+                Service_car::where('buses_id', $id)->delete();
+                foreach ($request->service_id as $sv =>$v) {
+                $data = [
+                    'buses_id' => $id,
+                    'service_id'=>$request->service_id[$sv],
+                    'service_price'=>$request->service_price[$sv]
+                    ];
+                    Service_car::create($data);
+                }
+            }
 
-        }
+        // }
     }
 
     /**
@@ -137,6 +160,7 @@ class BusesController extends Controller
     public function destroy($id)
     {
         $buses = Buses::findOrFail($id);
+        $buses->Service()->detach();
         $buses->delete();
     }
 

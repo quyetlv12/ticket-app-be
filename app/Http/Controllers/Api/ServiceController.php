@@ -40,18 +40,18 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:services|max:10|min:5',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|unique:services|max:10|min:5',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        } else{
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'errors' => $validator->errors()
+        //     ]);
+        // } else{
                 return $createservice = Service::create($request->all());
 
-        }
+        // }
     }
 
     /**
@@ -87,20 +87,20 @@ class ServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:services|max:10|min:5',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|unique:services|max:10|min:5',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        } else{
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'errors' => $validator->errors()
+        //     ]);
+        // } else{
             $service = Service::findOrFail($id);
             $service->update($request->all());
             return $service;
 
-        }
+        // }
     }
 
     /**
