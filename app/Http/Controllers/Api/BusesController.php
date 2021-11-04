@@ -71,7 +71,6 @@ class BusesController extends Controller
                 $data = [
                     'buses_id' => $model->id,
                     'service_id'=>$request->service_id[$sv],
-                    'service_price'=>$request->service_price[$sv]
                     ];
                     Service_car::create($data);
                 }
@@ -140,7 +139,6 @@ class BusesController extends Controller
                 $data = [
                     'buses_id' => $id,
                     'service_id'=>$request->service_id[$sv],
-                    'service_price'=>$request->service_price[$sv]
                     ];
                     Service_car::create($data);
                 }

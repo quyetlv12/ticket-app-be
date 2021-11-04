@@ -26,6 +26,6 @@ class Buses extends Model
         'description'
     ];
     public function Service(){
-        return $this->belongsToMany(Service::class, 'service_cars','buses_id', 'service_id')->withPivot('service_price');
+        return $this->belongsToMany(Service::class, 'service_cars','buses_id', 'service_id');
     }
 }
