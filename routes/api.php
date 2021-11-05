@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BusesController;
 use App\Http\Controllers\Api\CartypeController;
 use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\LoginController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +31,10 @@ Route::get('search', [BusesController::class , 'search']);
 Route::resource('cartypes', CartypeController::class);
 Route::resource('services', ServiceController::class);
 
+//Register
+Route::post('register', [RegisterController::class , 'register']);
+
+//Login
+Route::post('login', [LoginController::class , 'login']);
 
 
