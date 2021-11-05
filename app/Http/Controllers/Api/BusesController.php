@@ -169,6 +169,9 @@ class BusesController extends Controller
         if ($request->endPointId) {
             $search_query->where('endPointId', $request->endPointId);
         }
+        if ($request->date_active) {
+            $search_query->where('date_active', $request->date_active);
+        }
         $bus = $search_query->get();
         return $bus;
     }
