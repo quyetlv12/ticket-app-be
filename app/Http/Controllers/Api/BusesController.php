@@ -172,7 +172,28 @@ class BusesController extends Controller
         if ($request->date_active) {
             $search_query->where('date_active', $request->date_active);
         }
-        $bus = $search_query->get();
+
+        if ($request->sortBy && in_array($request->sortBy, ['id' , 'created_at'])) {
+            $sortBy = $request->sortBy;
+        } else {
+            $sortBy = 'id';
+        }
+        if ($request->sortOrder && in_array($request->sortOrder, ['asc', 'desc'])) {
+            $sortOrder = $request->sortOrder;
+        } else {
+            $sortOrder = 'asc';
+        }
+        if ($request->sortBy && in_array($request->sortBy, ['id' , 'created_at'])) {
+            $sortBy = $request->sortBy;
+        } else {
+            $sortBy = 'price';
+        }
+        if ($request->sortOrder && in_array($request->sortOrder, ['asc', 'desc'])) {
+            $sortOrder = $request->sortOrder;
+        } else {
+            $sortOrder = 'asc';
+        }
+        $bus = $search_query->orderBY($sortBy, $sortOrder)->get();
         return $bus;
     }
 

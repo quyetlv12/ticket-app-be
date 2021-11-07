@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\CartypeController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\TicketController;
+
 
 
 
@@ -30,6 +32,7 @@ Route::resource('buses', BusesController::class);
 Route::get('search', [BusesController::class , 'search']);
 Route::resource('cartypes', CartypeController::class);
 Route::resource('services', ServiceController::class);
+Route::resource('ticket', TicketController::class);
 
 //Register
 Route::post('register', [RegisterController::class , 'register']);

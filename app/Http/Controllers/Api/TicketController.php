@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Buses;
+use App\Models\Ticket;
+use App\Models\Buses_tickes;
+
 
 class TicketController extends Controller
 {
@@ -14,7 +19,27 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        // return Ticket::join('users', 'user_id', '=', 'users.id')
+        //     ->join('buses', 'buses_id', '=', 'buses.id')
+        //     ->select(
+        //         'tickets.id',
+        //         'users.name',
+        //         'users.email',
+        //         'tickets.status',
+        //         )
+        // // ->paginate(5)
+        // // ->orderBy('id_ticket', 'asc')
+        //     ->get();
+        return $list_ticket = Ticket::join('users', 'user_id', '=', 'users.id')
+        ->select(
+                'tickets.id',
+                'users.name',
+                'users.email',
+                'tickets.status',
+                )
+        // ->paginate(5)
+        // ->orderBy('id_ticket', 'asc')
+        ->with('Buses')->get();
     }
 
     /**
@@ -35,7 +60,19 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = new Ticket();
+        $model->fill($request->all());
+        $model->save();
+        if ($request->buses_id){
+            $request->buses_id=array_unique($request->buses_id);
+            foreach ($request->buses_id as $bs =>$b) {
+            $data = [
+                'ticket_id' => $model->id,
+                'buses_id'=>$request->buses_id[$bs],
+                ];
+                Buses_tickes::create($data);
+            }
+        }
     }
 
     /**
