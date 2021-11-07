@@ -35,6 +35,7 @@ class TicketController extends Controller
                 'tickets.id',
                 'users.name',
                 'users.email',
+                'tickets.booking_date',
                 'tickets.status',
                 )
         // ->paginate(5)
