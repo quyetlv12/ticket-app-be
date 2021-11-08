@@ -20,6 +20,7 @@ class CreateNewsTable extends Migration
             $table->date('post_time');
             $table->text('description')->nullable();
             $table->timestamps();
+
         });
     }
 

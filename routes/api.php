@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\TicketController;
-
+use App\Http\Controllers\Api\UserController;
 
 
 
@@ -33,7 +33,7 @@ Route::get('search', [BusesController::class , 'search']);
 Route::resource('cartypes', CartypeController::class);
 Route::resource('services', ServiceController::class);
 Route::resource('ticket', TicketController::class);
-
+Route::resource('users', UserController::class);
 //Register
 Route::post('register', [RegisterController::class , 'register']);
 

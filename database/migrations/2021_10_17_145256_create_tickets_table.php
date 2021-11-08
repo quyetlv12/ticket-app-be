@@ -19,6 +19,7 @@ class CreateTicketsTable extends Migration
             $table->date('booking_date');
             $table->string('status')->default('ACTIVED');
             $table->timestamps();
+
         });
     }
 

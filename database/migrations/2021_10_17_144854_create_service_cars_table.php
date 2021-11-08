@@ -18,6 +18,7 @@ class CreateServiceCarsTable extends Migration
             $table->unsignedBigInteger('buses_id');
             $table->unsignedBigInteger('service_id');
             $table->timestamps();
+
         });
     }
 

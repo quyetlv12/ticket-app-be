@@ -18,6 +18,7 @@ class CreateBusesTickesTable extends Migration
             $table->unsignedBigInteger('buses_id');
             $table->unsignedBigInteger('ticket_id');
             $table->timestamps();
+
         });
     }
 
