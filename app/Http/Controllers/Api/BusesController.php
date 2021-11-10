@@ -97,8 +97,7 @@ class BusesController extends Controller
      */
     public function edit($id)
     {
-        $buses = Buses::find($id);
-        return $buses;
+        return $buses = Buses::with('Service')->where('id', '=', $id)->first();
     }
 
     /**

@@ -11,20 +11,26 @@ class Ticket extends Model
     protected $table = "tickets";
     protected $fillable =
     [
-        'user_id',
-        'booking_date',
+        'buses_id',
+        'customer_name',
+        'email',
+        'phone_number',
+        'quantity',
+        'Identity Card',
         'status',
+        'description',
+
     ];
-    // public function buses(){
-    //     return $this->belongsTo(Buses::class,'buses_id');
-    // }
+    public function buses(){
+        return $this->belongsTo(Buses::class,'buses_id');
+    }
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function Buses(){
-        return $this->belongsToMany(Buses::class, 'buses_tickes','ticket_id', 'buses_id');
-    }
+    // public function Buses(){
+    //     return $this->belongsToMany(Buses::class, 'buses_tickes','ticket_id', 'buses_id');
+    // }
 
 }

@@ -30,17 +30,20 @@ class TicketController extends Controller
         // // ->paginate(5)
         // // ->orderBy('id_ticket', 'asc')
         //     ->get();
-        return $list_ticket = Ticket::join('users', 'user_id', '=', 'users.id')
-        ->select(
-                'tickets.id',
-                'users.name',
-                'users.email',
-                'tickets.booking_date',
-                'tickets.status',
-                )
-        // ->paginate(5)
-        // ->orderBy('id_ticket', 'asc')
-        ->with('Buses')->get();
+        // return $list_ticket = Ticket::join('users', 'user_id', '=', 'users.id')
+        // ->select(
+        //         'tickets.id',
+        //         'users.name',
+        //         'users.email',
+        //         'tickets.booking_date',
+        //         'tickets.status',
+        //         )
+        // // ->paginate(5)
+        // // ->orderBy('id_ticket', 'asc')
+        // ->with('Buses')->get();
+        $list_tk = Ticket::with('Buses')->get();
+        return $list_tk;
+
     }
 
     /**
@@ -61,19 +64,7 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $model = new Ticket();
-        $model->fill($request->all());
-        $model->save();
-        if ($request->buses_id){
-            $request->buses_id=array_unique($request->buses_id);
-            foreach ($request->buses_id as $bs =>$b) {
-            $data = [
-                'ticket_id' => $model->id,
-                'buses_id'=>$request->buses_id[$bs],
-                ];
-                Buses_tickes::create($data);
-            }
-        }
+        return $createtk = Ticket::create($request->all());
     }
 
     /**
@@ -84,7 +75,8 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        //
+        return $ticket = Ticket::with('buses')->where('id', '=', $id)->first();
+
     }
 
     /**
@@ -95,7 +87,8 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ticket = Ticket::find($id);
+        return $ticket;
     }
 
     /**
@@ -107,7 +100,9 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+        $ticket->update($request->all());
+        return $ticket;
     }
 
     /**
@@ -118,6 +113,7 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+        $ticket->delete();
     }
 }
