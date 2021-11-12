@@ -18,6 +18,7 @@ class Ticket extends Model
         'quantity',
         'identity_card',
         'status',
+        'totalPrice',
         'description',
 
     ];

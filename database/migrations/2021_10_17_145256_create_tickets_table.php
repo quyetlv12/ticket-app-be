@@ -22,7 +22,7 @@ class CreateTicketsTable extends Migration
             $table->integer('quantity')->default(1);
             $table->string('identity_card');
             $table->string('status')->default('WAITING_ACTIVE');
-            $table->integer('price')->default(0);
+            $table->integer('totalPrice')->default(0);
             $table->text('description')->nullable();
             $table->timestamps();
 
