@@ -16,7 +16,7 @@ class Ticket extends Model
         'email',
         'phone_number',
         'quantity',
-        'Identity Card',
+        'identity_card',
         'status',
         'description',
 
