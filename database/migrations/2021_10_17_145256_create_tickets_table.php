@@ -20,7 +20,7 @@ class CreateTicketsTable extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->integer('quantity')->default(1);
-            $table->string('Identity Card');
+            $table->string('identity_card');
             $table->string('status')->default('WAITING_ACTIVE');
             $table->integer('price')->default(0);
             $table->text('description')->nullable();
