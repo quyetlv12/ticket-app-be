@@ -48,7 +48,9 @@ class CartypeController extends Controller
         //         'errors' => $validator->errors()
         //     ]);
         // } else{
-                return $createcar_type = Cartype::create($request->all());
+                $createcar_type = Cartype::create($request->all());
+                return response()
+                ->json(['message' => 'Thêm loại xe thành công']);
 
         // }
     }
@@ -97,7 +99,8 @@ class CartypeController extends Controller
         // } else{
             $cartype = Cartype::findOrFail($id);
             $cartype->update($request->all());
-            return $cartype;
+            return response()
+            ->json(['message' => 'Cập nhật chuyến xe thành công']);
 
         // }
     }
@@ -112,5 +115,7 @@ class CartypeController extends Controller
     {
         $cartype = Cartype::findOrFail($id);
         $cartype->delete();
+        return response()
+            ->json(['message' => 'Xóa loại xe thành công']);
     }
 }

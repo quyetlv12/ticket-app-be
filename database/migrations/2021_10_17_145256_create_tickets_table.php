@@ -17,11 +17,12 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('buses_id');
             $table->string('customer_name');
-            $table->string('email')->unique();
-            $table->string('phone_number')->unique();
+            $table->string('email');
+            $table->string('phone_number');
             $table->integer('quantity')->default(1);
             $table->string('Identity Card');
             $table->string('status')->default('WAITING_ACTIVE');
+            $table->integer('price')->default(0);
             $table->text('description')->nullable();
             $table->timestamps();
 

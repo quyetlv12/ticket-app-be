@@ -47,8 +47,9 @@ class ServiceController extends Controller
         //         'errors' => $validator->errors()
         //     ]);
         // } else{
-                return $createservice = Service::create($request->all());
-
+            $createservice = Service::create($request->all());
+            return response()
+            ->json(['message' => 'Thêm dịch vụ thành công']);
         // }
     }
 
@@ -96,7 +97,8 @@ class ServiceController extends Controller
         // } else{
             $service = Service::findOrFail($id);
             $service->update($request->all());
-            return $service;
+            return response()
+            ->json(['message' => 'Cập nhật dịch vụ thành công']);
 
         // }
     }
@@ -111,5 +113,7 @@ class ServiceController extends Controller
     {
         $service = Service::findOrFail($id);
         $service->delete();
+        return response()
+            ->json(['message' => 'Xóa dịch vụ thành công']);
     }
 }

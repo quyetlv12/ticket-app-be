@@ -75,6 +75,8 @@ class BusesController extends Controller
                     Service_car::create($data);
                 }
             }
+            return response()
+            ->json(['message' => 'Thêm chuyến xe thành công']);
         // }
     }
 
@@ -142,7 +144,8 @@ class BusesController extends Controller
                     Service_car::create($data);
                 }
             }
-
+            return response()
+            ->json(['message' => 'Cập nhật chuyến xe thành công']);
         // }
     }
 
@@ -157,6 +160,8 @@ class BusesController extends Controller
         $buses = Buses::findOrFail($id);
         $buses->Service()->detach();
         $buses->delete();
+        return response()
+            ->json(['message' => 'Xóa chuyến xe thành công']);
     }
 
     public function search(Request $request)
