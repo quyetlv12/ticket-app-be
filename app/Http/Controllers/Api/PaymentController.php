@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Payment;
-use App\Models\Ticket;
 
 class PaymentController extends Controller
 {
@@ -21,12 +20,12 @@ class PaymentController extends Controller
         $vnp_TmnCode = "V4EIA74B"; //Mã website tại VNPAY
         $vnp_HashSecret = "YYATHYATSMXWMXQZXMKZZJFRTOMJDIAC"; //Chuỗi bí mật
         $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_OrderInfo = $request->order_desc;
+        $vnp_OrderInfo = $request->order_desc;//note nội dung
         $vnp_OrderType = $request->order_type;
         $vnp_Amount = $request->amount * 100;
         $vnp_Locale = $request->language;
         $vnp_BankCode = $request->bank_code;
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $vnp_IpAddr = request()->ip();
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
