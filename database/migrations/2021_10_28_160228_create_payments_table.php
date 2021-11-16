@@ -15,6 +15,14 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('ticket_id')->nullable();
+            $table->unsignedBigInteger('ticket_code')->nullable();
+            $table->integer('price')->nullable();
+            $table->string('note')->nullable();
+            $table->string('vnp_response_code')->nullable();
+            $table->string('code_vnpay')->nullable();
+            $table->string('code_bank')->nullable();
+            $table->dateTime('time')->nullable();
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\UserController;
-
+use App\Http\Controllers\Api\PaymentController;
 
 
 /*
@@ -40,4 +40,6 @@ Route::post('register', [RegisterController::class , 'register']);
 //Login
 Route::post('login', [LoginController::class , 'login']);
 
+Route::post('payment', [PaymentController::class , 'create']);
+Route::get('vnpay/return', [PaymentController::class, 'vnpayReturn'])->name('vnpay.return');
 
