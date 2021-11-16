@@ -25,7 +25,7 @@ class PaymentController extends Controller
         $vnp_Amount = $request->amount * 100;
         $vnp_Locale = $request->language;
         $vnp_BankCode = $request->bank_code;
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $vnp_IpAddr = request()->ip();
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
