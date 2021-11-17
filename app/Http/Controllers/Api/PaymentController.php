@@ -100,8 +100,7 @@ class PaymentController extends Controller
                 'vnp_response_code' => $vnpaydata['vnp_ResponseCode'],
                 'code_vnpay' => $vnpaydata['vnp_TransactionNo'],
                 'code_bank' => $vnpaydata['vnp_BankCode'],
-                'time' => $vnpaydata['vnp_PayDate'],
-                // 'time' => date('y-m-d H:i' , strtotime($vnpaydata['vnp_PayDate'])),
+                'time' => date('Y-m-d H:i:s' , strtotime($vnpaydata['vnp_PayDate'])),
             ];
             Payment::insert($dataPayment);
         }
