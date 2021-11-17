@@ -103,7 +103,7 @@ class PaymentController extends Controller
                 'time' => date('Y-m-d H:i:s' , strtotime($vnpaydata['vnp_PayDate'])),
             ];
             Payment::insert($dataPayment);
-            return redirect('https://fpoly-ticket-app-4xjgstib0-ticketapp.vercel.app/payment');
+            return redirect('http://localhost:3001/payment');
         } else {
             return response()
             ->json(['status' => 'FAILL']);
