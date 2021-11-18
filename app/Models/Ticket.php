@@ -12,6 +12,7 @@ class Ticket extends Model
     protected $fillable =
     [
         'buses_id',
+        'user_id',
         'customer_name',
         'email',
         'phone_number',
