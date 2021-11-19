@@ -64,7 +64,21 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        return $createtk = Ticket::create($request->all());
+        $data = [
+            'ticket_code' => 'SL' .rand(1000,9999),
+            'buses_id' => $request->buses_id,
+            'user_id' => $request->user_id,
+            'customer_name' => $request->customer_name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'quantity' => $request->quantity,
+            'identity_card' => $request->identity_card,
+            'status' => $request->status,
+            'paymentMethod' => $request->paymentMethod,
+            'totalPrice' => $request->totalPrice,
+            'description' => $request->description,
+        ];
+        return Ticket::create($data);
     }
 
     /**

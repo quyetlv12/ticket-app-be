@@ -11,6 +11,7 @@ class Ticket extends Model
     protected $table = "tickets";
     protected $fillable =
     [
+        'ticket_code',
         'buses_id',
         'user_id',
         'customer_name',
@@ -19,6 +20,7 @@ class Ticket extends Model
         'quantity',
         'identity_card',
         'status',
+        'paymentMethod',
         'totalPrice',
         'description',
 

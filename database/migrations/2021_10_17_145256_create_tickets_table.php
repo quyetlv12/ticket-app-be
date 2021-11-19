@@ -15,6 +15,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->string('ticket_code')->unique();
             $table->unsignedBigInteger('buses_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('customer_name');
@@ -23,6 +24,7 @@ class CreateTicketsTable extends Migration
             $table->integer('quantity')->default(1);
             $table->string('identity_card');
             $table->string('status')->default('WAITING_ACTIVE');
+            $table->string('paymentMethod')->default('OFFLINE');
             $table->integer('totalPrice')->default(0);
             $table->text('description')->nullable();
             $table->timestamps();

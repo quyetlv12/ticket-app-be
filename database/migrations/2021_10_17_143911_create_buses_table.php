@@ -24,12 +24,20 @@ class CreateBusesTable extends Migration
             $table->integer('startPointId');
             $table->string('endPointName');
             $table->integer('endPointId');
+            $table->integer('startWard_id');
+            $table->string('startWard_name');
+            $table->integer('startDisrict_id');
+            $table->string('startDistrict_name');
+            $table->integer('endWard_id');
+            $table->string('endWard_name');
+            $table->integer('endDisrict_id');
+            $table->string('endDistrict_name');
+            $table->integer('seat_empty');
             $table->date('date_active');
             $table->string('start_time');
             $table->string('status')->default('ACTIVED');
             $table->text('description')->nullable();
             $table->timestamps();
-
         });
     }
 
