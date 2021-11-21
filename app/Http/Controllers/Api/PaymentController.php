@@ -93,7 +93,7 @@ class PaymentController extends Controller
             // $data = $request->all();
             // $ticketID = Ticket::insertGetId($data);
             $dataPayment = [
-                'ticket_id' => $ticketID,
+                // 'ticket_id' => $ticketID,
                 'ticket_code' => $vnpaydata['vnp_TxnRef'],
                 'price' => $vnpaydata['vnp_Amount'],
                 'note' => $vnpaydata['vnp_OrderInfo'],
