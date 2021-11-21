@@ -41,7 +41,7 @@ class LoginController extends Controller
         }else {
             return response()->json([
                 'code' => 401,
-                'message' => 'Mật khẩu bạn đã nhập không chính xác. Quên mật khẩu?'
+                'message' => 'Email hoặc Password không đúng!'
             ], 401);
         }
     }
