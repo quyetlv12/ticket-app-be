@@ -10,7 +10,8 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PaymentController;
-
+use App\Http\Controllers\Api\TicketExportController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::get('search', [BusesController::class , 'search']);
 Route::resource('cartypes', CartypeController::class);
 Route::resource('services', ServiceController::class);
 Route::resource('ticket', TicketController::class);
+Route::get('ticketexport', [TicketExportController::class, 'export']);
 Route::resource('users', UserController::class);
 //Register
 Route::post('register', [RegisterController::class , 'register']);
@@ -42,4 +44,7 @@ Route::post('login', [LoginController::class , 'login']);
 
 Route::post('payment', [PaymentController::class , 'create']);
 Route::get('vnpay/return', [PaymentController::class, 'vnpayReturn'])->name('vnpay.return');
+
+Route::post('/sendmail', [MailController::class, "sendmail"]);
+
 
