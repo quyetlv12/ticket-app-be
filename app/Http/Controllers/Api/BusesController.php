@@ -8,7 +8,8 @@ use App\Models\Buses;
 use App\Models\Service_car;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\BusesResource;
-
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 class BusesController extends Controller
 {
     /**
@@ -16,12 +17,16 @@ class BusesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+         $this->middleware('auth:api_sessionuser',['except' => ['index']]);
+
+
+    }
     public function index()
     {
         $list_sv = Buses::with('Service')->get();
-        // echo"<pre>";
-        // print_r($list_sv);die;
-        // echo"</pre>";
+
         return $list_sv;
     }
 
@@ -62,6 +67,11 @@ class BusesController extends Controller
         //         'errors' => $validator->errors()
         //     ]);
         // } else{
+            if (! Gate::allows('add_buses')) {
+                return response()->json([
+                    'message' => 'bạn không có quyền truy cập'
+                ],403);
+            }else{
             $model = new Buses();
             $model->fill($request->all());
             $model->save();
@@ -77,7 +87,7 @@ class BusesController extends Controller
             }
             return response()
             ->json(['message' => 'Thêm chuyến xe thành công']);
-        // }
+         }
     }
 
     /**
@@ -131,6 +141,12 @@ class BusesController extends Controller
         //         'errors' => $validator->errors()
         //     ]);
         // } else{
+
+            if (! Gate::allows('edit_buses')) {
+                return response()->json([
+                    'message' => 'bạn không có quyền truy cập'
+                ],403);
+            }else{
             $buses = Buses::findOrFail($id);
             $buses->update($request->all());
             if ($request->service_id){
@@ -146,7 +162,7 @@ class BusesController extends Controller
             }
             return response()
             ->json(['message' => 'Cập nhật chuyến xe thành công']);
-        // }
+        }
     }
 
     /**
@@ -157,11 +173,17 @@ class BusesController extends Controller
      */
     public function destroy($id)
     {
+        if (! Gate::allows('delete_buses')) {
+            return response()->json([
+                'message' => 'bạn không có quyền truy cập'
+            ],403);
+        }else{
         $buses = Buses::findOrFail($id);
         $buses->Service()->detach();
         $buses->delete();
         return response()
             ->json(['message' => 'Xóa chuyến xe thành công']);
+        }
     }
 
     public function search(Request $request)

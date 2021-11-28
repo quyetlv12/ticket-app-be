@@ -12,6 +12,9 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\TicketExportController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\UserAdminController;
+use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +50,13 @@ Route::get('vnpay/return', [PaymentController::class, 'vnpayReturn'])->name('vnp
 
 Route::post('/sendmail', [MailController::class, "sendmail"]);
 
+
+//quản lý tài khoản
+
+Route::resource('userAdmin', UserAdminController::class);
+
+//quản lý role - permission
+Route::resource('role', RolePermissionController::class);
+//api permision
+Route::resource('permission', PermissionController::class)->only('index');
 

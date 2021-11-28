@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cartype;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class CartypeController extends Controller
 {
@@ -15,6 +16,13 @@ class CartypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+
+        $this->middleware('auth:api_sessionuser',['except' => ['index']]);
+
+
+   }
     public function index()
     {
         $cartype = Cartype::all();
@@ -48,11 +56,17 @@ class CartypeController extends Controller
         //         'errors' => $validator->errors()
         //     ]);
         // } else{
+
+            if (! Gate::allows('add_cartype')) {
+                return response()->json([
+                    'message' => 'bạn không có quyền truy cập'
+                ],403);
+            }else{
                 $createcar_type = Cartype::create($request->all());
                 return response()
                 ->json(['message' => 'Thêm loại xe thành công']);
 
-        // }
+         }
     }
 
     /**
@@ -97,12 +111,18 @@ class CartypeController extends Controller
         //         'errors' => $validator->errors()
         //     ]);
         // } else{
+
+            if (! Gate::allows('edit_cartype')) {
+                return response()->json([
+                    'message' => 'bạn không có quyền truy cập'
+                ],403);
+            }else{
             $cartype = Cartype::findOrFail($id);
             $cartype->update($request->all());
             return response()
             ->json(['message' => 'Cập nhật chuyến xe thành công']);
 
-        // }
+         }
     }
 
     /**
@@ -113,9 +133,15 @@ class CartypeController extends Controller
      */
     public function destroy($id)
     {
+        if (! Gate::allows('delete_cartype')) {
+            return response()->json([
+                'message' => 'bạn không có quyền truy cập'
+            ],403);
+        }else{
         $cartype = Cartype::findOrFail($id);
         $cartype->delete();
         return response()
             ->json(['message' => 'Xóa loại xe thành công']);
+        }
     }
 }

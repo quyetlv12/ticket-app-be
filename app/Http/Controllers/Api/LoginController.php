@@ -20,7 +20,13 @@ class LoginController extends Controller
 
         if (Auth::attempt($dataCheckLogin)) {
             $checkTokenExit = SessionUser::where('user_id', auth()->id())->first();
-            $showUsers = Auth::user();
+            $showUsers1 =  User::with('roles')->find(Auth::id());
+            if(count($showUsers1->roles) >=1 )
+            {
+                $showUsers = User::with('roles')->find(Auth::id());
+            }else{
+                $showUsers = Auth::user();
+            }
             if (empty($checkTokenExit)) {
                 $userSession = SessionUser::create([
                     'token' => Str::random(40),

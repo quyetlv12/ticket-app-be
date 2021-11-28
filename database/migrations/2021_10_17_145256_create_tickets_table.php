@@ -26,6 +26,8 @@ class CreateTicketsTable extends Migration
             $table->string('status')->default('WAITING_ACTIVE');
             $table->string('paymentMethod')->default('OFFLINE');
             $table->integer('totalPrice')->default(0);
+            $table->integer('depositAmount')->default(0);
+            $table->date('date_active');
             $table->text('description')->nullable();
             $table->timestamps();
 

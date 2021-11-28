@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api_sessionuser' => [
+            'driver' => 'token',
+            'input_key' => 'token',   // The input name to pass through
+            'storage_key' => 'token',
+            'provider' => 'session_users'
+        ],
     ],
 
     /*
@@ -69,6 +75,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'session_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SessionUser::class,
+        ],
     ],
 
     /*
@@ -92,6 +102,11 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'session_users' => [
+            'provider' => 'session_users',
+            'table' => 'password_resets',
+            'expire' => 60,
         ],
     ],
 

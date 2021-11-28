@@ -32,9 +32,13 @@ class CreateBusesTable extends Migration
             $table->string('endWard_name');
             $table->integer('endDisrict_id');
             $table->string('endDistrict_name');
+            $table->string('detailAddressStart ');
+            $table->string('detailAddressEnd');
             $table->integer('seat_empty');
             $table->date('date_active');
             $table->string('start_time');
+            $table->string('range_time');
+            $table->string('end_time');
             $table->string('status')->default('ACTIVED');
             $table->text('description')->nullable();
             $table->timestamps();

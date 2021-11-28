@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 class ServiceController extends Controller
 {
     /**
@@ -14,6 +15,13 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+
+        $this->middleware('auth:api_sessionuser',['except' => ['index']]);
+
+
+   }
     public function index()
     {
         $service = Service::all();
@@ -47,10 +55,15 @@ class ServiceController extends Controller
         //         'errors' => $validator->errors()
         //     ]);
         // } else{
+            if (! Gate::allows('add_service')) {
+                return response()->json([
+                    'message' => 'bạn không có quyền truy cập'
+                ],403);
+            }else{
             $createservice = Service::create($request->all());
             return response()
             ->json(['message' => 'Thêm dịch vụ thành công']);
-        // }
+        }
     }
 
     /**
@@ -95,12 +108,17 @@ class ServiceController extends Controller
         //         'errors' => $validator->errors()
         //     ]);
         // } else{
+            if (! Gate::allows('edit_service')) {
+                return response()->json([
+                    'message' => 'bạn không có quyền truy cập'
+                ],403);
+            }else{
             $service = Service::findOrFail($id);
             $service->update($request->all());
             return response()
             ->json(['message' => 'Cập nhật dịch vụ thành công']);
 
-        // }
+        }
     }
 
     /**
@@ -111,9 +129,15 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
+        if (! Gate::allows('delete_service')) {
+            return response()->json([
+                'message' => 'bạn không có quyền truy cập'
+            ],403);
+        }else{
         $service = Service::findOrFail($id);
         $service->delete();
         return response()
             ->json(['message' => 'Xóa dịch vụ thành công']);
+        }
     }
 }
