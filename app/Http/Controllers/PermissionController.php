@@ -13,7 +13,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permission = Permission::with('permissionsChildrent')->get();
+        $permission = Permission::all();
+        return $permission;
     }
 
     /**
