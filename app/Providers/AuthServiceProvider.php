@@ -71,7 +71,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('add_buses', function (SessionUser $user) {
             return $user->checkPermissionAccess('add_buses');
         });
-        Gate::define('update_buses', function (SessionUser $user) {
+        Gate::define('edit_buses', function (SessionUser $user) {
             return $user->checkPermissionAccess('edit_buses');
         });
         Gate::define('delete_buses', function (SessionUser $user) {
@@ -86,7 +86,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('add_service', function (SessionUser $user) {
             return $user->checkPermissionAccess('add_service');
         });
-        Gate::define('update_service', function (SessionUser $user) {
+        Gate::define('edit_service', function (SessionUser $user) {
             return $user->checkPermissionAccess('edit_service');
         });
         Gate::define('delete_service', function (SessionUser $user) {
@@ -116,7 +116,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('add_cartype', function (SessionUser $user) {
             return $user->checkPermissionAccess('add_cartype');
         });
-        Gate::define('update_cartype', function (SessionUser $user) {
+        Gate::define('edit_cartype', function (SessionUser $user) {
             return $user->checkPermissionAccess('edit_cartype');
         });
         Gate::define('delete_cartype', function (SessionUser $user) {
