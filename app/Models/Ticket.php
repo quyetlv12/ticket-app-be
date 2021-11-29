@@ -22,6 +22,8 @@ class Ticket extends Model
         'status',
         'paymentMethod',
         'totalPrice',
+        'depositAmount',
+        'reservationTime',
         'description',
 
     ];

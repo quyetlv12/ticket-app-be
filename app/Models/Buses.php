@@ -28,9 +28,13 @@ class Buses extends Model
         'endWard_name',
         'endDisrict_id',
         'endDistrict_name',
+        'detailAddressStart',
+        'detailAddressEnd',
         'seat_empty',
         'date_active',
         'start_time',
+        'range_time',
+        'end_time',
         'status',
         'description'
     ];
