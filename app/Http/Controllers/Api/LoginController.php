@@ -46,9 +46,9 @@ class LoginController extends Controller
             ], 200);
         }else {
             return response()->json([
-                'code' => 401,
+                'code' => 400,
                 'message' => 'Email hoặc Password không đúng!'
-            ], 401);
+            ], 400);
         }
     }
 }
