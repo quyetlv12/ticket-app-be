@@ -75,6 +75,8 @@ class TicketController extends Controller
             'identity_card' => $request->identity_card,
             'status' => $request->status,
             'paymentMethod' => $request->paymentMethod,
+            'depositAmount' => $request->depositAmount,
+            'reservationTime' => $request->reservationTime,
             'totalPrice' => $request->totalPrice,
             'description' => $request->description,
         ];

@@ -29,8 +29,6 @@ class DatabaseSeeder extends Seeder
 
     public function UserAndRole(){
         $user = User::create([
-
-
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
                 'phone_number' => '023456777',
@@ -39,7 +37,6 @@ class DatabaseSeeder extends Seeder
                 "gender" => 'nam',
                 'created_at' => now(),
                 'updated_at' => now()
-
         ]);
 
         $role = Roles::create([
