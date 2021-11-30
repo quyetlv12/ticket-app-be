@@ -132,6 +132,10 @@ class UserAdminController extends Controller
                     'message' => 'bạn không có quyền truy cập'
                 ],403);
             }else{
+                $newPassword = $request->get('password');
+                if(empty($newPassword)){
+                    $this->user->find($id)->update($request->except('password'));
+            }else{
             $this->user->find($id)->update([
                 "name" => $request->name,
                 "email" => $request->email,
@@ -140,6 +144,7 @@ class UserAdminController extends Controller
                 "image" => $request->image,
                 "gender" => $request->gender,
             ]);
+            }
             $user =$this->user->find($id);
             //thêm role vào bảng role
             $roleId = $request->role_id;
