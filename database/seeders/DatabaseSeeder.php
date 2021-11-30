@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-       $this->UserAndRole();
+        $this->UserAndRole();
         $this->permission();
         $this->rolePermission();
 
@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
 
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
-                'phone_number' => '0000000000',
-                'password' => bcrypt('123456'),
+                'phone_number' => '023456777',
+                'password' => bcrypt('12345'),
                 "image" => 'img.jpg',
                 "gender" => 'nam',
                 'created_at' => now(),
