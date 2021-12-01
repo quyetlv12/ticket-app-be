@@ -5,7 +5,6 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\SessionUser;
-
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -31,9 +30,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->servicePermission();
         //$this->ticketPermission();
         $this->cartypePermission();
+        $this->newsPermission();
         //quản lý user
-        //
+
     }
+
     public function userAdmin(){
         Gate::define('list_user', function (SessionUser $user) {
             return $user->checkPermissionAccess('list_user');
@@ -121,6 +122,21 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('delete_cartype', function (SessionUser $user) {
             return $user->checkPermissionAccess('delete_cartype');
+        });
+    }
+
+    public function newsPermission(){
+        Gate::define('list_news', function (SessionUser $user) {
+            return $user->checkPermissionAccess('list_news');
+        });
+        Gate::define('add_news', function (SessionUser $user) {
+            return $user->checkPermissionAccess('add_news');
+        });
+        Gate::define('edit_news', function (SessionUser $user) {
+            return $user->checkPermissionAccess('edit_news');
+        });
+        Gate::define('delete_news', function (SessionUser $user) {
+            return $user->checkPermissionAccess('delete_news');
         });
     }
 }

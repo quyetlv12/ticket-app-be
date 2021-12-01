@@ -19,41 +19,68 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        $this->UserAndRole();
+
+      $this->UserAndRole();
         $this->permission();
         $this->rolePermission();
-
+         $this->roleNhanVien();
 
     }
 
     public function UserAndRole(){
-        $user = User::create([
+        $userAdmin = User::create([
+
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
-                'phone_number' => '023456777',
-                'password' => bcrypt('12345'),
+                'phone_number' => '0000000000',
+                'password' => bcrypt('123456'),
+                "image" => 'img.jpg',
+                "gender" => 'nam',
+                'created_at' => now(),
+                'updated_at' => now()
+        ]);
+        $userStaff = User::create([
+                'name' => 'Nhân viên phụ trách',
+                'email' => 'staff@gmail.com',
+                'phone_number' => '1111111111',
+                'password' => bcrypt('123456'),
                 "image" => 'img.jpg',
                 "gender" => 'nam',
                 'created_at' => now(),
                 'updated_at' => now()
         ]);
 
-        $role = Roles::create([
+        $roleADmin = Roles::create([
 
                 'name'        => 'admin',
                 'display_name'=>'Quản trị viên'
 
         ]);
+        $roleStaff = Roles::create([
+
+                'name'        => 'Nhân viên',
+                'display_name'=>'Nhân viên'
 
 
-        $roleOfUser =  DB::table('user_roles')->insert([
-            'role_id' => $role->id,
-            'user_id' => $user->id,
+        ]);
+
+
+
+
+        $roleOfUserAdmin =  DB::table('user_roles')->insert([
+            'role_id' => $roleADmin->id,
+            'user_id' => $userAdmin->id,
+        ]);
+
+
+        $roleOfUserStaff =  DB::table('user_roles')->insert([
+            'role_id' => $roleStaff->id,
+            'user_id' => $userStaff->id,
         ]);
 
 
     }
+
 
  ///////////////////////////////////////////////// ---- DATA PERMISSION ------//////////////////////////
  public function permission(){
@@ -299,6 +326,46 @@ class DatabaseSeeder extends Seeder
 
                     ]
                 ]);
+
+                 // quản lý NEWS cha
+            $newsPermission_Parent= Permission::create([
+                'name'        => 'Bài viết',
+                'display_name'=> 'Quản lý bài viết',
+                'parent_id'   => 0,
+                'key_code'    => 'news'
+
+                ]);
+        // quản lý NEWS con
+                $newsPermission= DB::table('permissions')->insert([
+                    [
+                        'name'        => 'Danh sách bài viết',
+                        'display_name'=> 'Danh sách bài viết',
+                        'parent_id'   => $newsPermission_Parent->id,
+                        'key_code'    => 'list_news'
+
+                    ],
+                    [
+                        'name'        => 'Thêm bài viết',
+                        'display_name'=> 'Thêm bài viết',
+                        'parent_id'   => $newsPermission_Parent->id,
+                        'key_code'    => 'add_news'
+
+                    ],
+                    [
+                        'name'        => 'Cập nhật bài viết',
+                        'display_name'=> 'Cập nhật bài viết',
+                        'parent_id'   => $newsPermission_Parent->id,
+                        'key_code'    => 'edit_news'
+
+                    ],
+                    [
+                        'name'        => 'Xoá bài viết',
+                        'display_name'=> 'Xoá bài viết',
+                        'parent_id'   => $newsPermission_Parent->id,
+                        'key_code'    => 'delete_news'
+
+                    ]
+                ]);
             }
 ////////////////////////////// -------------Tài khoản Admin full quyền -------------//////////////
 
@@ -312,6 +379,28 @@ class DatabaseSeeder extends Seeder
                         'permission_id' => $permiss->id,
                     ]);
                 }
+              }
+
+              public function roleNhanVien(){
+
+                  //lấy id của thằng cha
+                $permissID  = Permission::where('key_code','user')->first();
+                // lấy tất cả id thằng con theo parent_id = id thằng cha
+                $parent_id = Permission::where('parent_id',$permissID->id)->get('id');
+                //lấy tất cả id tk con
+
+                   //lấy tất cả theo id ngoại trừ  $permisionChidren
+
+                   $permiss  = Permission::whereNotIn('id',$parent_id)->get();
+
+                   $role = Roles::where('name','Nhân viên')->first();
+                foreach($permiss as $permiss){
+                    DB::table('role_permissions')->insert([
+                        'role_id' => $role->id,
+                        'permission_id' => $permiss->id,
+                    ]);
+                }
+
               }
 
         }

@@ -15,6 +15,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserAdminController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\Api\NewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ Route::resource('services', ServiceController::class);
 Route::resource('ticket', TicketController::class);
 Route::get('ticketexport', [TicketExportController::class, 'export']);
 Route::resource('users', UserController::class);
+Route::resource('news', NewController::class);
+
 //Register
 Route::post('register', [RegisterController::class , 'register']);
 
