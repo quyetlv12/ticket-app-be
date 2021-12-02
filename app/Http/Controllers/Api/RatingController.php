@@ -86,6 +86,15 @@ class RatingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (! Gate::allows('delete_buses')) {
+            return response()->json([
+                'message' => 'bạn không có quyền truy cập'
+            ],403);
+        }else{
+        $rating = Rating::findOrFail($id);
+        $rating->delete();
+        return response()
+            ->json(['message' => 'Xóa thành công']);
+        }
     }
 }
