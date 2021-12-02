@@ -19,7 +19,7 @@ class BusesController extends Controller
      */
     public function __construct(){
 
-         $this->middleware('auth:api_sessionuser',['except' => ['index', 'search', 'show']]);
+         $this->middleware('auth:api_sessionuser',['except' => ['index', 'search', 'show' , 'update']]);
 
 
     }
@@ -142,11 +142,7 @@ class BusesController extends Controller
         //     ]);
         // } else{
 
-            if (! Gate::allows('edit_buses')) {
-                return response()->json([
-                    'message' => 'bạn không có quyền truy cập'
-                ],403);
-            }else{
+
             $buses = Buses::findOrFail($id);
             $buses->update($request->all());
             if ($request->service_id){
@@ -162,7 +158,7 @@ class BusesController extends Controller
             }
             return response()
             ->json(['message' => 'Cập nhật chuyến xe thành công']);
-        }
+
     }
 
     /**

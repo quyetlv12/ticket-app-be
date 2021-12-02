@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-      $this->UserAndRole();
+        $this->UserAndRole();
         $this->permission();
         $this->rolePermission();
-         $this->roleNhanVien();
+        $this->roleNhanVien();
 
     }
 
