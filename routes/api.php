@@ -16,6 +16,8 @@ use App\Http\Controllers\UserAdminController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Api\NewController;
+use App\Http\Controllers\Api\RatingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +59,7 @@ Route::post('/sendmail', [MailController::class, "sendmail"]);
 Route::post('buses/rating/{buses_id}', [BusesController::class , 'rating']);//lấy id của chuyến xe
 //api delete
 Route::delete('rating/{id}', [BusesController::class , 'deleteRating']);//lấy id của rating
+Route::resource('rating', RatingController::class);
 
 //quản lý tài khoản
 

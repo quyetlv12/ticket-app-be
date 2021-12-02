@@ -21,8 +21,6 @@ class BusesController extends Controller
     public function __construct(){
 
          $this->middleware('auth:api_sessionuser',['except' => ['index', 'search', 'show' , 'update']]);
-
-
     }
     public function index()
     {
