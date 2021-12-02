@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Buses;
+use App\Models\Rating;
 use App\Models\Service_car;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\BusesResource;
@@ -25,7 +26,7 @@ class BusesController extends Controller
     }
     public function index()
     {
-        $list_sv = Buses::with('Service')->get();
+        $list_sv = Buses::with('Service','rating')->get();//thêm rating vào with()
 
         return $list_sv;
     }
@@ -98,8 +99,9 @@ class BusesController extends Controller
      */
     public function show($id)
     {
-        return $buses = Buses::with('Service')->where('id', '=', $id)->first();
+        return $buses = Buses::with('Service','rating')->where('id', '=', $id)->get();//thêm rating vào with()
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -217,6 +219,36 @@ class BusesController extends Controller
         }
         $bus = $search_query->orderBY($sortBy, $sortOrder)->get();
         return $bus;
+    }
+    public function rating(Request $request,$buses_id)
+    {
+
+
+        $review = new Rating;
+        $review->rating_point = $request->rating_point;
+        $review->description = $request->description;
+        $review->user_id = auth()->user()->getId();
+        $review->user_name = auth()->user()->getName();
+        $review->buses_id = $request->buses_id;
+        $review->rating_time = now();
+        $review->save();
+        return  Rating::with('Buses:id,name')->where('id',$review->id)->get();
+
+
+    }
+
+    public function deleteRating($id)
+    {
+        if (! Gate::allows('delete_buses')) {
+            return response()->json([
+                'message' => 'bạn không có quyền truy cập'
+            ],403);
+        }else{
+        $rating = Rating::findOrFail($id);
+        $rating->delete();
+        return response()
+            ->json(['message' => 'Xóa thành công']);
+        }
     }
 
 }

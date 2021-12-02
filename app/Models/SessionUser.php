@@ -29,4 +29,10 @@ class SessionUser extends Model
             }
             return false;
     }
+    public function getName()
+    {
+        $nameUsser = User::where('id',auth()->user()->getId())->first();
+        return $nameUsser->name;
+    }
+
 }

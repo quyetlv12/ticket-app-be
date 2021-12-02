@@ -53,6 +53,10 @@ Route::get('vnpay/return', [PaymentController::class, 'vnpayReturn'])->name('vnp
 
 Route::post('/sendmail', [MailController::class, "sendmail"]);
 
+//api create rating
+Route::post('buses/rating/{buses_id}', [BusesController::class , 'rating']);//lấy id của chuyến xe
+//api delete
+Route::delete('rating/{id}', [BusesController::class , 'deleteRating']);//lấy id của rating
 
 //quản lý tài khoản
 

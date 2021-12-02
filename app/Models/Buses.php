@@ -41,4 +41,8 @@ class Buses extends Model
     public function Service(){
         return $this->belongsToMany(Service::class, 'service_cars','buses_id', 'service_id');
     }
+    public function rating()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

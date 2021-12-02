@@ -21,7 +21,6 @@ class CreateRatingsTable extends Migration
             $table->string('rating_point');
             $table->text('description')->nullable();
             $table->timestamps();
-
         });
     }
 
