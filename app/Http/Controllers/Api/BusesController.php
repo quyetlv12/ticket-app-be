@@ -97,7 +97,7 @@ class BusesController extends Controller
      */
     public function show($id)
     {
-        return $buses = Buses::with('Service','rating')->where('id', '=', $id)->get();//thêm rating vào with()
+        return $buses = Buses::with('Service','rating')->where('id', '=', $id)->first();
     }
 
 

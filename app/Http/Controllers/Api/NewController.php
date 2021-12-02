@@ -99,7 +99,7 @@ class NewController extends Controller
                 'message' => 'bạn không có quyền truy cập'
             ],403);
         }else{
-        $news = new News;
+        $news = News::find($id);
         $news->name = $request->name;
         $news->description = $request->description;
         $news->image = $request->image;
