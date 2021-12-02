@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Rating;
-
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 class RatingController extends Controller
 {
     /**

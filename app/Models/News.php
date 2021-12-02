@@ -9,7 +9,7 @@ class News extends Model
 {
     use HasFactory;
     protected $table = "news";
-    protected $fillable = ['name', 'user_id', 'post_time', 'description'];
+    protected $fillable = ['name', 'user_id','image' , 'post_time', 'description'];
     public function user()
     {
         return $this->belongsTo(User::class);

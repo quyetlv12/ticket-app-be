@@ -54,6 +54,7 @@ class NewController extends Controller
         $news = new News;
         $news->name = $request->name;
         $news->description = $request->description;
+        $news->image = $request->image;
         $news->post_time = now();
         $news->user_id = auth()->user()->getId();
         $news->save();
@@ -101,6 +102,7 @@ class NewController extends Controller
         $news = new News;
         $news->name = $request->name;
         $news->description = $request->description;
+        $news->image = $request->image;
         $news->post_time = now();
         $news->user_id = auth()->user()->getId();
         $news->update();
