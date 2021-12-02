@@ -220,8 +220,6 @@ class BusesController extends Controller
     }
     public function rating(Request $request,$buses_id)
     {
-
-
         $review = new Rating;
         $review->rating_point = $request->rating_point;
         $review->description = $request->description;
@@ -231,8 +229,6 @@ class BusesController extends Controller
         $review->rating_time = now();
         $review->save();
         return  Rating::with('Buses:id,name')->where('id',$review->id)->get();
-
-
     }
 
 }
