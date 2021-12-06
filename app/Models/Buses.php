@@ -32,6 +32,7 @@ class Buses extends Model
         'detailAddressEnd',
         'seat_empty',
         'date_active',
+        'date_inactive',
         'start_time',
         'range_time',
         'end_time',

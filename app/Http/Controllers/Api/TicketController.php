@@ -132,4 +132,13 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($id);
         $ticket->delete();
     }
+    public function searchTK(Request $request)
+    {
+        $search_query = Ticket::with(['buses']);
+        if ($request->ticket_code) {
+            $search_query->where('ticket_code', $request->ticket_code);
+        }
+        $ticket = $search_query->get();
+        return $ticket;
+    }
 }

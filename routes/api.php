@@ -40,6 +40,7 @@ Route::get('search', [BusesController::class , 'search']);
 Route::resource('cartypes', CartypeController::class);
 Route::resource('services', ServiceController::class);
 Route::resource('ticket', TicketController::class);
+Route::get('searchTK', [TicketController::class , 'searchTK']);
 Route::get('ticketexport', [TicketExportController::class, 'export']);
 Route::resource('users', UserController::class);
 Route::resource('news', NewController::class);

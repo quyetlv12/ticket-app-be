@@ -26,20 +26,26 @@ class TicketsExport implements
 {
     use Exportable;
 
-    // private $year;
-    // private $month;
-
-    // public function __construct(int $year, int $month) {
-    //     $this->year = $year;
-    //     $this->month = $month;
-
-    // }
+    protected $from_date;
+    protected $to_date;
+    protected $today;
+    function __construct($from_date,$to_date,$today)
+    {
+        $this->from_date = $from_date;
+        $this->to_date = $to_date." 23:59:59";
+        $this->today = $today;
+    }
 
     public function query()
     {
-        return Ticket::query()->with('buses');
-        // ->whereYear('created_at', $this->year)
-        // ->whereMonth('created_at', $this->month);
+        if($this->from_date !=""){
+            return $ticket = Ticket::orderBy('created_at')->with('buses')
+            ->where('created_at', '>=', $this->from_date)
+            ->where('created_at', '<=', $this->to_date);
+        }else {
+            return $ticket = Ticket::with('buses')->wheredate('created_at', $this->today);
+        }
+
     }
     public function map($ticket) :array {
         return [
@@ -51,11 +57,11 @@ class TicketsExport implements
             $ticket->totalPrice,
             $ticket->status,
             $ticket->paymentMethod,
-            $ticket->buses->name,
-            $ticket->buses->startPointName,
-            $ticket->buses->endPointName,
-            $ticket->buses->date_active,
-            $ticket->buses->start_time,
+            !empty($ticket->buses->name)?$ticket->buses->name:"null",
+            !empty($ticket->buses->startPointName)?$ticket->buses->startPointName:"null",
+            !empty($ticket->buses->endPointName)?$ticket->buses->endPointName:"null",
+            !empty($ticket->buses->date_active)?$ticket->buses->date_active:"null",
+            !empty($ticket->buses->start_time)?$ticket->buses->start_time:"null",
             $ticket->created_at,
             $ticket->updated_at
         ];

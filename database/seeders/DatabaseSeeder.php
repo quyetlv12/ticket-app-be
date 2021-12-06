@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
 
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
-                'phone_number' => '0000000000',
+                'phone_number' => '0384056544',
                 'password' => bcrypt('123456'),
                 "image" => 'img.jpg',
                 "gender" => 'nam',
@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
         $userStaff = User::create([
                 'name' => 'Nhân viên phụ trách',
                 'email' => 'staff@gmail.com',
-                'phone_number' => '1111111111',
+                'phone_number' => '01692582890',
                 'password' => bcrypt('123456'),
                 "image" => 'img.jpg',
                 "gender" => 'nam',

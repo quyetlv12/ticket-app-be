@@ -194,7 +194,9 @@ class BusesController extends Controller
         if ($request->date_active) {
             $search_query->where('date_active', $request->date_active);
         }
-
+        if ($request->start_time) {
+            $search_query->where('start_time', $request->start_time);
+        }
         if ($request->sortBy && in_array($request->sortBy, ['id' , 'created_at'])) {
             $sortBy = $request->sortBy;
         } else {
