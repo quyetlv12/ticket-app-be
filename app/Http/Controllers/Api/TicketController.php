@@ -138,6 +138,9 @@ class TicketController extends Controller
         if ($request->ticket_code) {
             $search_query->where('ticket_code', $request->ticket_code);
         }
+        if ($request->phone_number) {
+            $search_query->where('phone_number', $request->phone_number);
+        }
         $ticket = $search_query->get();
         return $ticket;
     }
