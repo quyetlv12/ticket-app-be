@@ -42,8 +42,10 @@ class TicketsExport implements
             return $ticket = Ticket::orderBy('created_at')->with('buses')
             ->where('created_at', '>=', $this->from_date)
             ->where('created_at', '<=', $this->to_date);
-        }else {
+        }else if($this->today !=""){
             return $ticket = Ticket::with('buses')->wheredate('created_at', $this->today);
+        }else{
+           return $ticket = Ticket::with('buses');
         }
 
     }
