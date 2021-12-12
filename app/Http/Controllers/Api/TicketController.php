@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Buses;
 use App\Models\Ticket;
 use App\Models\Buses_tickes;
-use App\Models\Statistical;
+use App\Models\statistical;
 use Carbon\Carbon;
 
 class TicketController extends Controller
@@ -120,7 +120,7 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         $ticket->update($request->all());
           $ticket_date = $ticket->date_ticket;
-        $statistic = Statistical::where('ticket_date',$ticket_date)->get();
+        $statistic = statistical::where('ticket_date',$ticket_date)->get();
         if($statistic){
             $statistic_count = $statistic->count();
         }else{
@@ -130,13 +130,13 @@ class TicketController extends Controller
             $total_price = $ticket->totalPrice;
             $qty_ticket = 1;
             if($statistic_count>0){
-                $statistic_update = Statistical::where('ticket_date',$ticket_date)->first();
+                $statistic_update = statistical::where('ticket_date',$ticket_date)->first();
                 $statistic_update->total_price = $statistic_update->total_price + $total_price;
                 $statistic_update->qty_ticket = $statistic_update->qty_ticket + $qty_ticket;
                 $statistic_update->save();
                 return response()->json(['message' => 'cập nhật thành công']);
             }else{
-                $statistic_new = new Statistical();
+                $statistic_new = new statistical();
                 $statistic_new->ticket_date =  $ticket_date;
                 $statistic_new->total_price =  $total_price;
                 $statistic_new->qty_ticket = $qty_ticket;
@@ -152,7 +152,7 @@ class TicketController extends Controller
     public function loc_khoang_tgian(Request $request){
         $date_from = $request->date_from;
         $date_to = $request->date_to;
-        return $get = Statistical::whereBetween('ticket_date',[$date_from,$date_to])->orderBy('ticket_date','ASC')->get();
+        return $get = statistical::whereBetween('ticket_date',[$date_from,$date_to])->orderBy('ticket_date','ASC')->get();
 
 
     }
@@ -166,22 +166,22 @@ class TicketController extends Controller
         $sub365day = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
         if($reques->date_loc == "7ngay")
         {
-           return $get = Statistical::whereBetween('ticket_date',[$sub7day,$now])->orderBy('ticket_date','ASC')->get();
+           return $get = statistical::whereBetween('ticket_date',[$sub7day,$now])->orderBy('ticket_date','ASC')->get();
         }
         else if($reques->date_loc == "thangnay"){
-            return $get = Statistical::whereBetween('ticket_date',[$thangnay,$now])->orderBy('ticket_date','ASC')->get();
+            return $get = statistical::whereBetween('ticket_date',[$thangnay,$now])->orderBy('ticket_date','ASC')->get();
         }
         else if($reques->date_loc == "thangtruoc"){
-            return $get = Statistical::whereBetween('ticket_date',[$dauthangtrc,$cuoithangtrc])->orderBy('ticket_date','ASC')->get();
+            return $get = statistical::whereBetween('ticket_date',[$dauthangtrc,$cuoithangtrc])->orderBy('ticket_date','ASC')->get();
         }else{
-            return $get = Statistical::whereBetween('ticket_date',[$sub365day,$now])->orderBy('ticket_date','ASC')->get();
+            return $get = statistical::whereBetween('ticket_date',[$sub365day,$now])->orderBy('ticket_date','ASC')->get();
         }
     }
     // hàm mặc định khi load trang sẽ chạy hàm này để view biểu đồ
     public function loc_default(){
         $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
         $sub30day = Carbon::now('Asia/Ho_Chi_Minh')->subdays(30)->toDateString();
-        return $get = Statistical::whereBetween('ticket_date',[$sub30day,$now])->orderBy('ticket_date','ASC')->get();
+        return $get = statistical::whereBetween('ticket_date',[$sub30day,$now])->orderBy('ticket_date','ASC')->get();
     }
     public function destroy($id)
     {
