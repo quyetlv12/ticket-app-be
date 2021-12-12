@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Buses;
 use App\Models\Ticket;
 use App\Models\Buses_tickes;
-use App\Models\Statistical;
 use Carbon\Carbon;
 
 class TicketController extends Controller
