@@ -20,8 +20,6 @@ class CartypeController extends Controller
     public function __construct(){
 
         $this->middleware('auth:api_sessionuser',['except' => ['index']]);
-
-
    }
     public function index()
     {

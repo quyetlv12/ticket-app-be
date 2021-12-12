@@ -29,9 +29,9 @@ class DatabaseSeeder extends Seeder
 
     public function UserAndRole(){
         $userAdmin = User::create([
-
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
+                'email_verified_at' => '2021-12-07T16:21:42.000000Z',
                 'phone_number' => '0384056544',
                 'password' => bcrypt('123456'),
                 "image" => 'img.jpg',
@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
         $userStaff = User::create([
                 'name' => 'Nhân viên phụ trách',
                 'email' => 'staff@gmail.com',
+                'email_verified_at' => '2021-12-07T16:21:42.000000Z',
                 'phone_number' => '01692582890',
                 'password' => bcrypt('123456'),
                 "image" => 'img.jpg',

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
-use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -22,7 +23,9 @@ class RegisterController extends Controller
                 "password" => bcrypt($request->password),
                 "image" => $request->image,
                 "gender" => $request->gender,
+                "remember_token" => Str::random(40),
             ]);
+            event(new Registered($userCreate));
             return response()->json(
                 $userCreate,
                  200);

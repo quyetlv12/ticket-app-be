@@ -25,7 +25,7 @@ class Ticket extends Model
         'depositAmount',
         'reservationTime',
         'description',
-
+        'date_ticket'
     ];
     public function buses(){
         return $this->belongsTo(Buses::class,'buses_id');

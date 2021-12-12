@@ -17,7 +17,10 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Api\NewController;
 use App\Http\Controllers\Api\RatingController;
-
+use App\Http\Controllers\VerifyEmailController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,3 +73,21 @@ Route::resource('role', RolePermissionController::class);
 //api permision
 Route::resource('permission', PermissionController::class)->only('index');
 
+//gửi mail verify
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
+Route::post('/email/verify/resend', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth:api', 'throttle:6,1'])->name('verification.send');
+
+//đổi mật khẩu, quên mật khẩu
+Route::post('password/email',[ForgotPasswordController::class, 'forgot']);
+Route::post('password/reset', [ForgotPasswordController::class,'reset']);
+
+
+Route::post('loc_ve', [TicketController::class , 'loc_khoang_tgian']);
+Route::post('loc_ve_thang', [TicketController::class , 'loc_theo_thang']);
+Route::get('loc_mac_dinh', [TicketController::class , 'loc_default']);
