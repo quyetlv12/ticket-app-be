@@ -79,6 +79,20 @@ class AuthServiceProvider extends ServiceProvider
             return $user->checkPermissionAccess('delete_buses');
         });
     }
+    public function carPermission(){
+        Gate::define('list_car', function (SessionUser $user) {
+            return $user->checkPermissionAccess('list_car');
+        });
+        Gate::define('add_car', function (SessionUser $user) {
+            return $user->checkPermissionAccess('add_car');
+        });
+        Gate::define('edit_car', function (SessionUser $user) {
+            return $user->checkPermissionAccess('edit_car');
+        });
+        Gate::define('delete_car', function (SessionUser $user) {
+            return $user->checkPermissionAccess('delete_car');
+        });
+    }
 
     public function servicePermission(){
         Gate::define('list_service', function (SessionUser $user) {

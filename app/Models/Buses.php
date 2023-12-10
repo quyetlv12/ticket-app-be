@@ -37,10 +37,14 @@ class Buses extends Model
         'range_time',
         'end_time',
         'status',
-        'description'
+        'description',
+        'car_id'
     ];
     public function Service(){
         return $this->belongsToMany(Service::class, 'service_cars','buses_id', 'service_id');
+    }
+    public function Car(){
+        return $this->belongsTo(Car::class, 'car_id');
     }
     public function rating()
     {
