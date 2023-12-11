@@ -9,6 +9,7 @@ use App\Models\Rating;
 use App\Models\Service_car;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\BusesResource;
+use App\Models\Car;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 class BusesController extends Controller
@@ -71,21 +72,40 @@ class BusesController extends Controller
                     'message' => 'bạn không có quyền truy cập'
                 ],403);
             }else{
-            $model = new Buses();
-            $model->fill($request->all());
-            $model->save();
-            if ($request->service_id){
-                $request->service_id=array_unique($request->service_id);
-                foreach ($request->service_id as $sv =>$v) {
-                $data = [
-                    'buses_id' => $model->id,
-                    'service_id'=>$request->service_id[$sv],
-                    ];
-                    Service_car::create($data);
+
+                $car_count = Car::count();
+                $buses_count = Buses::count();
+
+                if ($car_count == $buses_count) {
+                    # code...
+                    return response()
+                    ->json(['message' => 'Không thể thêm chuyến xe do số lượng xe đã đủ , Vui lòng thêm xe để tiếp tục'] , 400);
+
+                }else{
+                    $model = new Buses();
+                    $model->fill($request->all());
+                    $model->save();
+                    if ($request->service_id){
+                        $request->service_id=array_unique($request->service_id);
+                        foreach ($request->service_id as $sv =>$v) {
+                        $data = [
+                            'buses_id' => $model->id,
+                            'service_id'=>$request->service_id[$sv],
+                            ];
+                            Service_car::create($data);
+                        }
+                    }
+                    // nếu có car id thì update lại car với id của chuyến xe vừa tạo để sử dụng cho api lọc
+                    if ($model->car_id) {
+                        $car = Car::findOrFail($model->car_id);
+                        $car->update(['buses_id' => $model->id ]);
+                        # code...
+                    }
+                    return response()
+                    ->json(['message' => 'Thêm chuyến xe thành công']);
                 }
-            }
-            return response()
-            ->json(['message' => 'Thêm chuyến xe thành công']);
+
+          
          }
     }
 

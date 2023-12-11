@@ -49,6 +49,7 @@ Route::get('searchTK', [TicketController::class , 'searchTK']);
 Route::get('ticketexport', [TicketExportController::class, 'export']);
 Route::resource('users', UserController::class);
 Route::resource('news', NewController::class);
+Route::get('cars-total',[CarController::class , 'total']);
 
 //Register
 Route::post('register', [RegisterController::class , 'register']);

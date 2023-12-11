@@ -20,7 +20,7 @@ class CarController extends Controller
     public function __construct()
     {
 
-        $this->middleware('auth:api_sessionuser', ['except' => ['index', 'store', 'update']]);
+        $this->middleware('auth:api_sessionuser', ['except' => ['index', 'store', 'update' , 'total' , 'show']]);
     }
     public function index(Request $request)
     {
@@ -31,16 +31,6 @@ class CarController extends Controller
             $cars = Car::with('Buses')->get();
             return response()->json($cars);
         }
-        // if (!Gate::allows('list_car')) {
-        //     return response()->json([
-        //         'message' => 'bạn không có quyền truy cập'
-        //     ],403);
-        // }else{
-        //     $cars = Car::get();
-        //     return response()->json($cars);
-        // }
-
-       
     }
 
     /**
@@ -63,7 +53,6 @@ class CarController extends Controller
         //     return response()
         //     ->json(['message' => 'Thêm xe thành công !', 200]);
         // }
-
 
         $model = new Car();
         $model->fill($request->all());
@@ -105,8 +94,10 @@ class CarController extends Controller
     public function show($id)
     {
         //
-    }
-
+        $car = Car::findOrFail($id);
+        return response()
+        ->json($car , 200);
+        }
     /**
      * Update the specified resource in storage.
      *
@@ -132,5 +123,13 @@ class CarController extends Controller
     public function destroy($id)
     {
         //
+        $car = Car::findOrFail($id);
+        $car->delete();
+        return response()
+            ->json(['message' => 'Xóa xe thành công']);
+    }
+    public function total(){
+        $total = Car::count();
+        return response()->json(['total' => $total] , 200);
     }
 }
