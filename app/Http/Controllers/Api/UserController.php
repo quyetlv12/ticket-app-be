@@ -95,17 +95,20 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $users = User::findOrFail($id);
-        $request->merge(['password' => Hash::make($request->password)]);
-        $users->update($request->all());
-        if (! $users) {
+        if (Hash::check($request->old_password, $users->password)) {
+            $request->merge(['password' => Hash::make($request->password)]);
+            $users->update($request->all());
+            if (! $users) {
+                return response()
+                ->json(['error' => 'The user is not exists']);
+            }
+            Mail::to($request->input('email'))->send(new ChangePassword());
             return response()
-            ->json(['error' => 'The user is not exists']);
+                ->json($users);
+        }else{
+            return response()
+                ->json("Mật khẩu cũ không chính xác !" , 400);
         }
-        return response()
-            ->json($users);
-
-
-
     }
 
     /**
